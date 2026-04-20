@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap");
+
+@theme {
+  --font-display: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+
+  --color-bg: #080b10;
+  --color-surface: #0d1117;
+  --color-surface-2: #161c26;
+  --color-surface-3: #1e2535;
+  --color-border: #232d3f;
+  --color-border-bright: #2e3c52;
+
+  --color-accent: #4f9cf9;
+  --color-accent-dim: #2563eb;
+  --color-accent-glow: rgba(79, 156, 249, 0.15);
+
+  --color-emerald: #34d399;
+  --color-emerald-dim: rgba(52, 211, 153, 0.1);
+
+  --color-rose: #fb7185;
+  --color-amber: #fbbf24;
+
+  --color-text-primary: #e8edf5;
+  --color-text-secondary: #8899b0;
+  --color-text-muted: #4a5a72;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-bright);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Noise texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Glow effects */
+.accent-glow {
+  box-shadow:
+    0 0 30px var(--color-accent-glow),
+    0 0 60px rgba(79, 156, 249, 0.05);
+}
+
+.accent-glow-text {
+  text-shadow: 0 0 20px rgba(79, 156, 249, 0.5);
+}
+
+/* Grid pattern */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Animated gradient border */
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-border {
+  background: linear-gradient(135deg, #4f9cf9, #a855f7, #34d399, #4f9cf9);
+  background-size: 300% 300%;
+  animation: borderRotate 4s ease infinite;
+  padding: 1px;
+  border-radius: 12px;
+}
+
+/* Chat message markdown styles */
+.prose-chat {
+  line-height: 1.7;
+  font-size: 0.9375rem;
+}
+
+.prose-chat p {
+  margin-bottom: 0.75rem;
+}
+.prose-chat p:last-child {
+  margin-bottom: 0;
+}
+.prose-chat code {
+  background: var(--color-surface-3);
+  border: 1px solid var(--color-border);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "JetBrains Mono", monospace;
+}
+.prose-chat pre {
+  background: var(--color-surface-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+.prose-chat pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.prose-chat strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+.prose-chat ul,
+.prose-chat ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+.prose-chat li {
+  margin: 0.25rem 0;
+}
+.prose-chat h1,
+.prose-chat h2,
+.prose-chat h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+
+/* Typing indicator */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+.typing-dot {
+  animation: bounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Fade-up animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.4s ease forwards;
+}
+
+/* Slide-in sidebar */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Input glow on focus */
+.input-field:focus-within {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 2px rgba(79, 156, 249, 0.12);
+}
+
+/* Session item hover */
+.session-item:hover .session-delete {
+  opacity: 1;
+}
+.session-delete {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
